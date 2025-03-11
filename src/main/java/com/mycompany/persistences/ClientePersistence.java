@@ -13,7 +13,7 @@ import com.google.gson.Gson;
  * @author Rafael Pereira da Silva Matricula: 202235013
  */
 
-// ClientePersistence
+// Cliente Persistence
 public class ClientePersistence implements Persistence<Cliente> {
 
     private static final String PATH = DIRECTORY+ File.separator +"clientes.json";
@@ -39,7 +39,7 @@ public class ClientePersistence implements Persistence<Cliente> {
         List<Cliente> clientes = new ArrayList<>();
         if(!json.trim().equals("")) {
 
-            Type tipoLista = new TypeToken<List<Cliente>>() { }.getType();
+            Type tipoLista = new TypeToken<List<Cliente>>() {}.getType();
             clientes = gson.fromJson(json, tipoLista);
 
             if (clientes == null)

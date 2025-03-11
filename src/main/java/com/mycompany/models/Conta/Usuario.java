@@ -1,5 +1,6 @@
 package com.mycompany.models.Conta;
 
+import com.mycompany.exceptions.CpfException;
 import com.mycompany.models.ClassesAuxiliares.*;
 import java.util.Objects;
 
@@ -26,8 +27,8 @@ public abstract class Usuario {
         this.id = id;
     }
     
-    public boolean autenticar(Cpf cpf, String senhaDigitada) {
-        return this.senha.equals(senhaDigitada) && this.cpf.equals(cpf);
+    public boolean autenticar(String usuario, String senhaDigitada) throws CpfException {
+        return this.senha.equals(senhaDigitada) && this.cpf.equals(new Cpf(usuario));
     }
     
     //GETTERS

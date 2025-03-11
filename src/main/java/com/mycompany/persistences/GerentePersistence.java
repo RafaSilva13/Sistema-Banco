@@ -13,7 +13,7 @@ import com.google.gson.Gson;
  * @author Rafael Pereira da Silva Matricula: 202235013
  */
 
-// GerentePersistence
+// Gerente Persistence
 public class GerentePersistence implements Persistence<Gerente> {
 
     private static final String PATH = DIRECTORY+ File.separator +"gerentes.json";
@@ -27,19 +27,19 @@ public class GerentePersistence implements Persistence<Gerente> {
         if(!diretorio.exists())
             diretorio.mkdirs();
 
-        ArquivoCliente.salva(PATH, json);
+        ArquivoGerente.salva(PATH, json);
     }
 
     @Override
     public List<Gerente> findAll() {
         Gson gson = new Gson();
 
-        String json = ArquivoCliente.le(PATH);
+        String json = ArquivoGerente.le(PATH);
 
         List<Gerente> gerentes = new ArrayList<>();
         if(!json.trim().equals("")) {
 
-            Type tipoLista = new TypeToken<List<Gerente>>() { }.getType();
+            Type tipoLista = new TypeToken<List<Gerente>>() {}.getType();
             gerentes = gson.fromJson(json, tipoLista);
 
             if (gerentes == null)

@@ -1,6 +1,7 @@
 package com.mycompany.sistema.banco;
 
 import com.mycompany.exceptions.*;
+import com.mycompany.views.TelaLogin;
 
 /**
  *
@@ -9,6 +10,7 @@ import com.mycompany.exceptions.*;
 
 public class Main {
     public static void main(String[] args) throws CpfException, EmailException, TelefoneException {
-        SistemaBanco sitema = new SistemaBanco();
+        TelaLogin sistema = new TelaLogin();
+        sistema.exibirTelaLogin();
     }
 }

@@ -13,7 +13,7 @@ import com.google.gson.Gson;
  * @author Rafael Pereira da Silva Matricula: 202235013
  */
 
-// CaixaPersistence
+// Caixa Persistence
 public class CaixaPersistence implements Persistence<Caixa> {
 
     private static final String PATH = DIRECTORY+ File.separator +"caixas.json";
@@ -27,19 +27,19 @@ public class CaixaPersistence implements Persistence<Caixa> {
         if(!diretorio.exists())
             diretorio.mkdirs();
 
-        ArquivoCliente.salva(PATH, json);
+        ArquivoCaixa.salva(PATH, json);
     }
 
     @Override
     public List<Caixa> findAll() {
         Gson gson = new Gson();
 
-        String json = ArquivoCliente.le(PATH);
+        String json = ArquivoCaixa.le(PATH);
 
         List<Caixa> caixas = new ArrayList<>();
         if(!json.trim().equals("")) {
 
-            Type tipoLista = new TypeToken<List<Caixa>>() { }.getType();
+            Type tipoLista = new TypeToken<List<Caixa>>() {}.getType();
             caixas = gson.fromJson(json, tipoLista);
 
             if (caixas == null)
