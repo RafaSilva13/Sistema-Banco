@@ -1,6 +1,8 @@
 package com.mycompany.models.Conta;
 
+import com.mycompany.exceptions.SaldoInsuficienteException;
 import com.mycompany.models.ClassesAuxiliares.*;
+import java.util.Objects;
 
 /**
  *
@@ -18,7 +20,7 @@ public class Caixa extends Usuario {
         System.out.println("Depósito realizado com sucesso.");
     }
     
-    public boolean processarSaque(Cliente cliente, double valor) {
+    public boolean processarSaque(Cliente cliente, double valor) throws SaldoInsuficienteException {
         if (cliente.sacar(valor)) {
             System.out.println("Saque realizado com sucesso.");
             return true;
@@ -32,7 +34,30 @@ public class Caixa extends Usuario {
             System.out.println("Transferência realizada com sucesso.");
             return true;
         }
+        
         System.out.println("Saldo insuficiente.");
         return false;
+    }
+    
+    // SOBRESCREVENDO METODOS
+    
+    @Override
+    public String toString() {
+        return "Nome: " + nome + "; CPF: " + cpf + "; Telefone: " + numeroDeTelefone + "; Email: " + email + ";";
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        Cliente cliente = (Cliente)obj;
+        
+        return Objects.equals(cpf, cliente.cpf);    
     }
 }

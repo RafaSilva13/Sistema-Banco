@@ -22,7 +22,10 @@ public abstract class Usuario {
     
     public Usuario(String nome, Cpf cpf, Telefone numeroDeTelefone, Email email, String senha) {
         this.id = incrementadorId++;
+        this.nome = nome;
         this.cpf = cpf;
+        this.numeroDeTelefone = numeroDeTelefone;
+        this.email = email;
         this.senha = senha;
         this.id = id;
     }

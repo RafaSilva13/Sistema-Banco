@@ -2,7 +2,9 @@ package com.mycompany.models.Conta;
 
 import com.mycompany.models.ClassesAuxiliares.*;
 import com.mycompany.models.Conta.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -12,29 +14,45 @@ import java.util.List;
 // Gerente
 public class Gerente extends Usuario {
     private List<Usuario> usuarios; 
+    private List<RendaFixa> rendasFixas;
+    private List<RendaVariavel> rendasVariaveis;
     
     public Gerente(String nome, Cpf cpf, Telefone numeroDeTelefone, Email email, String senha) {
         super(nome, cpf, numeroDeTelefone, email, senha);
+        this.rendasFixas = new ArrayList<>();
+        this.rendasVariaveis = new ArrayList<>();
     }
     
-    public void avaliarCredito(Cliente cliente, double valor, boolean aprovado) {
-        if (aprovado) {
-            System.out.println("Crédito de R$ " + valor + " aprovado para " + cliente.getNome());
-        } else {
-            System.out.println("Crédito de R$ " + valor + " reprovado para " + cliente.getNome());
+    // Método para avaliar crédito
+    public void avaliarCredito(String cpfCliente, double valor, int prazo, boolean aprovado) {
+        for (Usuario u : usuarios) {
+            if (u instanceof Cliente && u.getCpf().toString().equals(cpfCliente)) {
+                Cliente cliente = (Cliente) u;
+                if (aprovado) {
+                    cliente.solicitarCredito(valor, prazo);
+                    System.out.println("Crédito de R$ " + valor + " aprovado para " + cliente.getNome());
+                } else {
+                    System.out.println("Crédito de R$ " + valor + " reprovado para " + cliente.getNome());
+                }
+                return;
+            }
         }
+        System.out.println("Cliente não encontrado.");
     }
     
-    public void cadastrarRendaFixa(String descricao, double taxaRendimento, int prazoMinimo, int prazoMaximo) {
-        RendaFixa rendaFixa = new RendaFixa(descricao, taxaRendimento, prazoMinimo, prazoMaximo);
+    // Método para cadastrar renda fixa
+    public void cadastrarRendaFixa(RendaFixa rendaFixa) {
+        rendasFixas.add(rendaFixa);
         System.out.println("Renda fixa cadastrada: " + rendaFixa);
     }
     
-    public void cadastrarRendaVariavel(String descricao, double percentualRisco, double rentabilidadeEsperada) {
-        RendaVariavel rendaVariavel = new RendaVariavel(descricao, percentualRisco, rentabilidadeEsperada);
+    // Método para cadastrar renda variável
+    public void cadastrarRendaVariavel(RendaVariavel rendaVariavel) {
+        rendasVariaveis.add(rendaVariavel);
         System.out.println("Renda variável cadastrada: " + rendaVariavel);
     }
     
+    // Método para criar usuários (Cliente, Caixa, Gerente)
     public void criarUsuario(String nome, Cpf cpf, Telefone numeroDeTelefone, Email email, String senha, String tipo) {
         switch (tipo.toLowerCase()) {
             case "cliente":
@@ -52,11 +70,13 @@ public class Gerente extends Usuario {
         System.out.println("Usuário criado com sucesso.");
     }
     
+    // Método para remover usuário
     public void removerUsuario(int id) {
         usuarios.removeIf(u -> u.getId() == id);
         System.out.println("Usuário removido com sucesso.");
     }
     
+    // Método para editar usuário
     public void editarUsuario(int id, String novoNome, String novaSenha) {
         for (Usuario u : usuarios) {
             if (u.getId() == id) {
@@ -67,5 +87,36 @@ public class Gerente extends Usuario {
             }
         }
         System.out.println("Usuário não encontrado.");
+    }
+
+    // Getters para listas de renda fixa e variável
+    public List<RendaFixa> getRendasFixas() {
+        return rendasFixas;
+    }
+
+    public List<RendaVariavel> getRendasVariaveis() {
+        return rendasVariaveis;
+    }
+    
+    // SOBRESCREVENDO METODOS
+    
+    @Override
+    public String toString() {
+        return "Nome: " + nome + "; CPF: " + cpf + "; Telefone: " + numeroDeTelefone + "; Email: " + email + ";";
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        Cliente cliente = (Cliente)obj;
+        
+        return Objects.equals(cpf, cliente.cpf);    
     }
 }

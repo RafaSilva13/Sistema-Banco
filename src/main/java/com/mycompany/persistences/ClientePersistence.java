@@ -1,12 +1,16 @@
 package com.mycompany.persistences;
 
-import com.mycompany.models.Conta.*;
+import com.mycompany.models.ClassesAuxiliares.LocalDateTimeAdapter;
+import static com.mycompany.persistences.Persistence.DIRECTORY;
+import com.mycompany.models.Conta.Cliente;
 import com.google.gson.reflect.TypeToken;
-import java.io.File;
+import com.google.gson.GsonBuilder;
+import java.time.LocalDateTime;
 import java.lang.reflect.Type;
+import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.Gson;
+import java.io.File;
 
 /**
  *
@@ -15,37 +19,36 @@ import com.google.gson.Gson;
 
 // Cliente Persistence
 public class ClientePersistence implements Persistence<Cliente> {
-
-    private static final String PATH = DIRECTORY+ File.separator +"clientes.json";
+    
+    private static final String PATH = DIRECTORY + File.separator + "clientes.json";
+    private static final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).setPrettyPrinting().create();
     
     @Override
     public void save(List<Cliente> itens) {
-        Gson gson = new Gson();
+        
         String json = gson.toJson(itens);
-
         File diretorio = new File(DIRECTORY);
-        if(!diretorio.exists())
+        
+        if (!diretorio.exists())
             diretorio.mkdirs();
-
+        
         ArquivoCliente.salva(PATH, json);
     }
-
+    
     @Override
     public List<Cliente> findAll() {
-        Gson gson = new Gson();
-
         String json = ArquivoCliente.le(PATH);
-
+        
         List<Cliente> clientes = new ArrayList<>();
-        if(!json.trim().equals("")) {
-
+        
+        if (!json.trim().isEmpty()) {   
             Type tipoLista = new TypeToken<List<Cliente>>() {}.getType();
             clientes = gson.fromJson(json, tipoLista);
-
+            
             if (clientes == null)
                 clientes = new ArrayList<>();
         }
-
+        
         return clientes;
     }
 }

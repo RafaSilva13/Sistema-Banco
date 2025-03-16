@@ -24,5 +24,21 @@ public class Transacao {
     public String toString() {
         return "[" + dataHora + "] " + tipo + ": R$ " + valor + " - " + descricao;
     }
+
+    public LocalDateTime getDataHora() {
+        return dataHora;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
 }
 

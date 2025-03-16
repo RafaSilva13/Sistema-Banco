@@ -17,6 +17,18 @@ public class RendaFixa extends Investimento {
         this.prazoMinimo = prazoMinimo;
         this.prazoMaximo = prazoMaximo;
     }
+
+    public double getTaxaRendimento() {
+        return taxaRendimento;
+    }
+
+    public int getPrazoMinimo() {
+        return prazoMinimo;
+    }
+
+    public int getPrazoMaximo() {
+        return prazoMaximo;
+    }
     
     @Override
     public String toString() {

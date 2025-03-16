@@ -39,7 +39,9 @@ public class TelaAdministrador {
     private JList<Gerente> jlGerente;
     private JList<Caixa> jlCaixa;
     private JList<Transacao> jlTransacoes;
-
+    private JList<RendaFixa> jlRendasFixas;
+    private JList<RendaVariavel> jlRendasVariaveis;
+    
     public void exibirTelaAdministrador() {
         // Cria uma nova janela
         tela = new JFrame("Área Administrador");
@@ -55,11 +57,19 @@ public class TelaAdministrador {
 
         DefaultListModel<Caixa> modelCaixas = new DefaultListModel<>();
         jlCaixa = new JList<>(modelCaixas);
-
+        
+        DefaultListModel<RendaFixa> modelRendaFixa = new DefaultListModel<>();
+        jlRendasFixas = new JList<>(modelRendaFixa);
+        
+        DefaultListModel<RendaVariavel> modelRendaVariavel = new DefaultListModel<>();
+        jlRendasVariaveis = new JList<>(modelRendaVariavel);
+        
         tela.addWindowListener(new GerenciaTransacoesAdministrador(this));
         tela.addWindowListener(new GerenciaClientesAdministrador(this));
         tela.addWindowListener(new GerenciaGerentesAdministrador(this));
         tela.addWindowListener(new GerenciaCaixasAdministrador(this));
+        tela.addWindowListener(new GerenciaRendasFixasAdministrador(this));
+        tela.addWindowListener(new GerenciaRendasVariaveisAdministrador(this));
 
         // Define o fechamento do programa ao fechar a janela
         tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -99,10 +109,19 @@ public class TelaAdministrador {
         JMenuItem item2 = new JMenuItem("Transações");
         item2.addActionListener(new OpcaoTransacoesAdministrador(this));
 
+        JMenuItem item3 = new JMenuItem("Renda Fixa");
+        item3.addActionListener(new OpcaoRendaFixaAdministrador(this));
+
+        JMenuItem item4 = new JMenuItem("Renda Variável");
+        item4.addActionListener(new OpcaoRendaVariavelAdministrador(this));
+
         // Adiciona opções no menu
         menu.add(item1);
         menu.addSeparator();
         menu.add(item2);
+        menu.addSeparator();
+        menu.add(item3);
+        menu.add(item4);
 
         // Adiciona menu na barra de menus
         menuBar.add(menu);
@@ -276,7 +295,7 @@ public class TelaAdministrador {
     public void exibirFormularioCadastro() {
         JDialog dialog = new JDialog(tela, "Adicionar Usuário", true);
         dialog.setLayout(new BorderLayout());
-        dialog.setSize(new Dimension(WIDTH / 3, 300)); // Ajuste o tamanho conforme necessário
+        dialog.setSize(new Dimension(WIDTH / 3, 280)); // Ajuste o tamanho conforme necessário
         dialog.setLocationRelativeTo(tela);
 
         JPanel formulario = new JPanel();
@@ -374,7 +393,7 @@ public class TelaAdministrador {
     public void exibirFormularioEdicao(String tipoUsuario, int selectedIndex) {
         JDialog dialog = new JDialog(tela, "Editar " + tipoUsuario, true);
         dialog.setLayout(new BorderLayout());
-        dialog.setSize(new Dimension(WIDTH / 3, 250)); // Ajuste o tamanho conforme necessário
+        dialog.setSize(new Dimension(WIDTH / 3, 250));
         dialog.setLocationRelativeTo(tela);
 
         JPanel formulario = new JPanel();
@@ -486,6 +505,176 @@ public class TelaAdministrador {
         dialog.add(painelBotoes, BorderLayout.SOUTH);
         dialog.setVisible(true);
     }
+    
+    public void exibirRendaFixa() {
+        // Remove o painel atual
+        principal.removeAll();
+
+        JPanel areaRendaFixa = new JPanel();
+        areaRendaFixa.setLayout(new BorderLayout());
+
+        JPanel painel = new JPanel();
+        painel.setBorder(BorderFactory.createTitledBorder("Renda Fixa"));
+        painel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        painel.setLayout(new BorderLayout());
+
+        painel.add(new JScrollPane(jlRendasFixas), BorderLayout.CENTER);
+
+        JButton btnAdicionar = new JButton("Adicionar Renda Fixa");
+        btnAdicionar.addActionListener(e -> cadastrarRendaFixa());
+
+        JButton btnEditar = new JButton("Editar Renda Fixa");
+        btnEditar.addActionListener(e -> editarRendaFixa());
+
+        JPanel painelBotoes = new JPanel();
+        painelBotoes.add(btnAdicionar);
+        painelBotoes.add(btnEditar);
+
+        areaRendaFixa.add(painel, BorderLayout.CENTER);
+        areaRendaFixa.add(painelBotoes, BorderLayout.SOUTH);
+
+        // Adiciona as rendas fixas à janela
+        principal.add(areaRendaFixa);
+
+        // Atualiza tela
+        principal.revalidate();
+        principal.repaint();
+    }
+
+    public void exibirRendaVariavel() {
+        // Remove o painel atual
+        principal.removeAll();
+
+        JPanel areaRendaVariavel = new JPanel();
+        areaRendaVariavel.setLayout(new BorderLayout());
+
+        JPanel painel = new JPanel();
+        painel.setBorder(BorderFactory.createTitledBorder("Renda Variável"));
+        painel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        painel.setLayout(new BorderLayout());
+
+        painel.add(new JScrollPane(jlRendasVariaveis), BorderLayout.CENTER);
+
+        JButton btnAdicionar = new JButton("Adicionar Renda Variável");
+        btnAdicionar.addActionListener(e -> cadastrarRendaVariavel());
+
+        JButton btnEditar = new JButton("Editar Renda Variável");
+        btnEditar.addActionListener(e -> editarRendaVariavel());
+
+        JPanel painelBotoes = new JPanel();
+        painelBotoes.add(btnAdicionar);
+        painelBotoes.add(btnEditar);
+
+        areaRendaVariavel.add(painel, BorderLayout.CENTER);
+        areaRendaVariavel.add(painelBotoes, BorderLayout.SOUTH);
+
+        // Adiciona as rendas variáveis à janela
+        principal.add(areaRendaVariavel);
+
+        // Atualiza tela
+        principal.revalidate();
+        principal.repaint();
+    }
+
+    private void exibirFormularioEdicaoRendaFixa(RendaFixa rendaFixa, int selectedIndex) {
+        JDialog dialog = new JDialog(tela, "Editar Renda Fixa", true);
+        dialog.setLayout(new BorderLayout());
+        dialog.setSize(new Dimension(WIDTH / 2, 200));
+        dialog.setLocationRelativeTo(tela);
+
+        JPanel formulario = new JPanel();
+        formulario.setBorder(BorderFactory.createTitledBorder("Editar Renda Fixa"));
+        formulario.setLayout(new GridLayout(0, 2, H_GAP, V_GAP));
+
+        JLabel lblDescricao = new JLabel("Descrição:");
+        JTextField tfDescricao = new JTextField(rendaFixa.getDescricao());
+
+        JLabel lblTaxaRendimento = new JLabel("Taxa de Rendimento (%):");
+        JTextField tfTaxaRendimento = new JTextField(String.valueOf(rendaFixa.getTaxaRendimento()));
+
+        JLabel lblPrazoMinimo = new JLabel("Prazo Mínimo (meses):");
+        JTextField tfPrazoMinimo = new JTextField(String.valueOf(rendaFixa.getPrazoMinimo()));
+
+        JLabel lblPrazoMaximo = new JLabel("Prazo Máximo (meses):");
+        JTextField tfPrazoMaximo = new JTextField(String.valueOf(rendaFixa.getPrazoMaximo()));
+
+        formulario.add(lblDescricao);
+        formulario.add(tfDescricao);
+        formulario.add(lblTaxaRendimento);
+        formulario.add(tfTaxaRendimento);
+        formulario.add(lblPrazoMinimo);
+        formulario.add(tfPrazoMinimo);
+        formulario.add(lblPrazoMaximo);
+        formulario.add(tfPrazoMaximo);
+
+        JButton btnSalvar = new JButton("Salvar");
+        btnSalvar.addActionListener(e -> {
+            String descricao = tfDescricao.getText();
+            double taxaRendimento = Double.parseDouble(tfTaxaRendimento.getText());
+            int prazoMinimo = Integer.parseInt(tfPrazoMinimo.getText());
+            int prazoMaximo = Integer.parseInt(tfPrazoMaximo.getText());
+
+            RendaFixa rendaFixaEditada = new RendaFixa(descricao, taxaRendimento, prazoMinimo, prazoMaximo);
+            ((DefaultListModel<RendaFixa>) jlRendasFixas.getModel()).set(selectedIndex, rendaFixaEditada);
+
+            JOptionPane.showMessageDialog(dialog, "Renda fixa editada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            dialog.dispose();
+        });
+
+        JPanel painelBotoes = new JPanel();
+        painelBotoes.add(btnSalvar);
+
+        dialog.add(formulario, BorderLayout.CENTER);
+        dialog.add(painelBotoes, BorderLayout.SOUTH);
+        dialog.setVisible(true);
+    }
+
+    private void exibirFormularioEdicaoRendaVariavel(RendaVariavel rendaVariavel, int selectedIndex) {
+        JDialog dialog = new JDialog(tela, "Editar Renda Variável", true);
+        dialog.setLayout(new BorderLayout());
+        dialog.setSize(new Dimension(WIDTH / 2, 200));
+        dialog.setLocationRelativeTo(tela);
+
+        JPanel formulario = new JPanel();
+        formulario.setBorder(BorderFactory.createTitledBorder("Editar Renda Variável"));
+        formulario.setLayout(new GridLayout(0, 2, H_GAP, V_GAP));
+
+        JLabel lblDescricao = new JLabel("Descrição:");
+        JTextField tfDescricao = new JTextField(rendaVariavel.getDescricao());
+
+        JLabel lblPercentualRisco = new JLabel("Percentual de Risco (%):");
+        JTextField tfPercentualRisco = new JTextField(String.valueOf(rendaVariavel.getPercentualRisco()));
+
+        JLabel lblRentabilidadeEsperada = new JLabel("Rentabilidade Esperada (%):");
+        JTextField tfRentabilidadeEsperada = new JTextField(String.valueOf(rendaVariavel.getRentabilidadeEsperada()));
+
+        formulario.add(lblDescricao);
+        formulario.add(tfDescricao);
+        formulario.add(lblPercentualRisco);
+        formulario.add(tfPercentualRisco);
+        formulario.add(lblRentabilidadeEsperada);
+        formulario.add(tfRentabilidadeEsperada);
+
+        JButton btnSalvar = new JButton("Salvar");
+        btnSalvar.addActionListener(e -> {
+            String descricao = tfDescricao.getText();
+            double percentualRisco = Double.parseDouble(tfPercentualRisco.getText());
+            double rentabilidadeEsperada = Double.parseDouble(tfRentabilidadeEsperada.getText());
+
+            RendaVariavel rendaVariavelEditada = new RendaVariavel(descricao, percentualRisco, rentabilidadeEsperada);
+            ((DefaultListModel<RendaVariavel>) jlRendasVariaveis.getModel()).set(selectedIndex, rendaVariavelEditada);
+
+            JOptionPane.showMessageDialog(dialog, "Renda variável editada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            dialog.dispose();
+        });
+
+        JPanel painelBotoes = new JPanel();
+        painelBotoes.add(btnSalvar);
+
+        dialog.add(formulario, BorderLayout.CENTER);
+        dialog.add(painelBotoes, BorderLayout.SOUTH);
+        dialog.setVisible(true);
+    }
 
     public void adicionarCliente(String nome, String cpf, String telefone, String email, String senha) {
         try {
@@ -553,7 +742,86 @@ public class TelaAdministrador {
         }
     }
 
+    private void cadastrarRendaFixa() {
+        String descricao = JOptionPane.showInputDialog(null, "Digite a descrição da renda fixa:");
+        if (descricao == null || descricao.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Descrição não pode ser vazia!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String taxaRendimentoStr = JOptionPane.showInputDialog(null, "Digite a taxa de rendimento (%):");
+        if (taxaRendimentoStr == null || taxaRendimentoStr.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Taxa de rendimento não pode ser vazia!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        double taxaRendimento = Double.parseDouble(taxaRendimentoStr);
+
+        String prazoMinimoStr = JOptionPane.showInputDialog(null, "Digite o prazo mínimo (em meses):");
+        if (prazoMinimoStr == null || prazoMinimoStr.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Prazo mínimo não pode ser vazio!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int prazoMinimo = Integer.parseInt(prazoMinimoStr);
+
+        String prazoMaximoStr = JOptionPane.showInputDialog(null, "Digite o prazo máximo (em meses):");
+        if (prazoMaximoStr == null || prazoMaximoStr.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Prazo máximo não pode ser vazio!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int prazoMaximo = Integer.parseInt(prazoMaximoStr);
+
+        RendaFixa rendaFixa = new RendaFixa(descricao, taxaRendimento, prazoMinimo, prazoMaximo);
+        ((DefaultListModel<RendaFixa>) jlRendasFixas.getModel()).addElement(rendaFixa);
+
+        JOptionPane.showMessageDialog(null, "Renda fixa cadastrada com sucesso!");
+    }
+
+    private void editarRendaFixa() {
+        int selectedIndex = jlRendasFixas.getSelectedIndex();
+        if (selectedIndex != -1) {
+            RendaFixa rendaFixa = ((DefaultListModel<RendaFixa>) jlRendasFixas.getModel()).get(selectedIndex);
+            exibirFormularioEdicaoRendaFixa(rendaFixa, selectedIndex);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma renda fixa para editar!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void cadastrarRendaVariavel() {
+        String descricao = JOptionPane.showInputDialog(null, "Digite a descrição da renda variável:");
+        if (descricao == null || descricao.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Descrição não pode ser vazia!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String percentualRiscoStr = JOptionPane.showInputDialog(null, "Digite o percentual de risco (%):");
+        if (percentualRiscoStr == null || percentualRiscoStr.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Percentual de risco não pode ser vazio!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        double percentualRisco = Double.parseDouble(percentualRiscoStr);
+
+        String rentabilidadeEsperadaStr = JOptionPane.showInputDialog(null, "Digite a rentabilidade esperada (%):");
+        if (rentabilidadeEsperadaStr == null || rentabilidadeEsperadaStr.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Rentabilidade esperada não pode ser vazia!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        double rentabilidadeEsperada = Double.parseDouble(rentabilidadeEsperadaStr);
+
+        RendaVariavel rendaVariavel = new RendaVariavel(descricao, percentualRisco, rentabilidadeEsperada);
+        ((DefaultListModel<RendaVariavel>) jlRendasVariaveis.getModel()).addElement(rendaVariavel);
+
+        JOptionPane.showMessageDialog(null, "Renda variável cadastrada com sucesso!");
+    }
     
+    private void editarRendaVariavel() {
+        int selectedIndex = jlRendasVariaveis.getSelectedIndex();
+        if (selectedIndex != -1) {
+            RendaVariavel rendaVariavel = ((DefaultListModel<RendaVariavel>) jlRendasVariaveis.getModel()).get(selectedIndex);
+            exibirFormularioEdicaoRendaVariavel(rendaVariavel, selectedIndex);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma renda variável para editar!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     public class EditarUsuario implements ActionListener {
         private TelaAdministrador telaAdministrador;
@@ -710,6 +978,7 @@ public class TelaAdministrador {
             modelTransacoes.addElement(t);
         }
     }
+    
 
     public void removerUsuario(String tipoUsuario) {
         switch (tipoUsuario) {

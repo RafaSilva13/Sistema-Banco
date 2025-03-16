@@ -15,6 +15,14 @@ public class RendaVariavel extends Investimento {
         this.percentualRisco = percentualRisco;
         this.rentabilidadeEsperada = rentabilidadeEsperada;
     }
+
+    public double getPercentualRisco() {
+        return percentualRisco;
+    }
+
+    public double getRentabilidadeEsperada() {
+        return rentabilidadeEsperada;
+    }
     
     @Override
     public String toString() {

@@ -1,5 +1,6 @@
 package com.mycompany.models.Conta;
 
+import com.mycompany.exceptions.SaldoInsuficienteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -35,22 +36,27 @@ public class Cliente extends Usuario {
         extrato.add(new Transacao("Depósito", valor, "Depósito realizado"));
     }
     
-    public boolean sacar(double valor) {
-        if (saldo >= valor) {
-            saldo -= valor;
-            extrato.add(new Transacao("Saque", valor, "Saque realizado"));
-            return true;
+    public boolean sacar(double valor) throws SaldoInsuficienteException {
+        if (saldo < valor) {
+            throw new SaldoInsuficienteException("Saldo insuficiente para realizar o saque.");
         }
-        return false;
+        
+        saldo -= valor;
+        extrato.add(new Transacao("Saque", valor, "Saque realizado"));
+        
+        return true;
     }
     
-    public boolean transferir(Cliente destino, double valor) {
+    public boolean transferir(Cliente contaDestino, double valor) {
         if (saldo >= valor) {
             saldo -= valor;
-            destino.depositar(valor);
-            extrato.add(new Transacao("Transferência", valor, "Transferência para " + destino.getNome()));
+            contaDestino.depositar(valor);
+            adicionarTransacaoExtrato(new Transacao("Transferência", valor, "Transferência para " + contaDestino.getNome()));
+            contaDestino.adicionarTransacaoExtrato(new Transacao("Transferência", valor, "Transferência recebida de " + this.getNome()));
+
             return true;
         }
+
         return false;
     }
     
@@ -67,8 +73,28 @@ public class Cliente extends Usuario {
         return random.nextInt(9000) + 1000;
     }
     
+    // SETTERS
+    
+    public void adicionarTransacaoExtrato(Transacao transacao) {
+        this.extrato.add(transacao);
+    }
+    
+    // GETTERS
+    
+    public List<Transacao> getExtrato() {
+        return extrato;
+    }
+
     public double getSaldo() {
         return saldo;
+    }
+
+    public int getNumeroConta() {
+        return numeroConta;
+    }
+
+    public List<Investimento> getInvestimentos() {
+        return investimentos;
     }
     
     public int retornaCodigoIdentificador(){
@@ -87,9 +113,11 @@ public class Cliente extends Usuario {
         if (this == obj) {
             return true;
         }
+        
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
+        
         Cliente cliente = (Cliente)obj;
         
         return Objects.equals(numeroConta, cliente.numeroConta);    
@@ -100,41 +128,40 @@ public class Cliente extends Usuario {
         return Objects.hash(numeroConta, saldo);
     }
 
-
     //ACOES DA CONTA
     
-    public void solicitarCredito(double valor) {
-        System.out.println("Solicitacao de crédito de R$ " + valor + " enviada para analise.");
+    // Método na classe Cliente
+    public void solicitarCredito(double valor, int prazo) {
+        extrato.add(new Transacao("Solicitação de Crédito", valor, "Solicitação de crédito com prazo de " + prazo + " meses"));
+        System.out.println("Solicitação de crédito de R$ " + valor + " enviada para análise.");
     }
     
-    public void investirRendaFixa(RendaFixa investimento, double valor) {
+    // Método para investir em renda fixa
+    public boolean investirRendaFixa(RendaFixa rendaFixa, double valor) {
+        
         if (saldo >= valor) {
-            
             saldo -= valor;
+            extrato.add(new Transacao("Investimento em Renda Fixa", valor, "Investimento: " + rendaFixa.getDescricao()));
+            investimentos.add(rendaFixa);
             
-            investimentos.add(investimento);
-            
-            extrato.add(new Transacao("Investimento em Renda Fixa", valor, "Investimento: " + investimento.getDescricao()));
-            
-            System.out.println("Investimento realizado com sucesso.");
-        } else {
-            System.out.println("Saldo insuficiente para investir.");
+            return true;
         }
+        
+        return false;
     }
-    
-    public void investirRendaVariavel(RendaVariavel investimento, double valor) {
+
+    // Método para investir em renda variável
+    public boolean investirRendaVariavel(RendaVariavel rendaVariavel, double valor) {
+        
         if (saldo >= valor) {
-            
             saldo -= valor;
+            extrato.add(new Transacao("Investimento em Renda Variável", valor, "Investimento: " + rendaVariavel.getDescricao()));
+            investimentos.add(rendaVariavel);
             
-            investimentos.add(investimento);
-            
-            extrato.add(new Transacao("Investimento em Renda Variável", valor, "Investimento: " + investimento.getDescricao()));
-            
-            System.out.println("Investimento realizado com sucesso.");
-        } else {
-            System.out.println("Saldo insuficiente para investir.");
+            return true;
         }
+        
+        return false;
     }
     
     public void listarInvestimentos() {
