@@ -1,12 +1,12 @@
 [
   {
-    "numeroConta": 4700,
-    "saldo": 500.0,
+    "numeroConta": 6768,
+    "saldo": 0.0,
     "extrato": [],
     "investimentos": [],
-    "id": 1,
+    "id": 0,
     "senha": "123",
-    "nome": "Rafael Pereira",
+    "nome": "Rafael",
     "cpf": {
       "cpf": "16107061614"
     },
@@ -17,27 +17,6 @@
     "email": {
       "email": "rafael@gmail.com",
       "login": "rafael",
-      "dominio": "gmail.com"
-    }
-  },
-  {
-    "numeroConta": 8811,
-    "saldo": 0.0,
-    "extrato": [],
-    "investimentos": [],
-    "id": 0,
-    "senha": "123",
-    "nome": "Lucas",
-    "cpf": {
-      "cpf": "20080974040"
-    },
-    "numeroDeTelefone": {
-      "ddd": 32,
-      "numero": "985658556"
-    },
-    "email": {
-      "email": "lucas@gmail.com",
-      "login": "lucas",
       "dominio": "gmail.com"
     }
   }

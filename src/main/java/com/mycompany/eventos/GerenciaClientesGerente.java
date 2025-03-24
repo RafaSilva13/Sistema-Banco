@@ -1,9 +1,9 @@
 package com.mycompany.eventos;
 
-import com.mycompany.persistences.TransacaoPersistence;
+import com.mycompany.persistences.ClientePersistence;
 import com.mycompany.persistences.Persistence;
-import com.mycompany.view.TelaAdministrador;
-import com.mycompany.models.Conta.Transacao;
+import com.mycompany.view.TelaGerente;
+import com.mycompany.models.Conta.Cliente;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.List;
@@ -13,25 +13,25 @@ import java.util.List;
  * @author Rafael Pereira da Silva Matricula: 202235013
  */
 
-public class GerenciaTransacoesAdministrador implements WindowListener {
+public class GerenciaClientesGerente implements WindowListener {
 
-    private final TelaAdministrador tela;
+    private final TelaGerente tela;
 
-    public GerenciaTransacoesAdministrador(TelaAdministrador tela) {
+    public GerenciaClientesGerente(TelaGerente tela) {
         this.tela = tela;
     }
 
     @Override
     public void windowOpened(WindowEvent e) {
-        Persistence<Transacao> transacaoPersistence = new TransacaoPersistence();
-        List<Transacao> all = transacaoPersistence.findAll();
-        tela.carregaTransacoes(all);
+        Persistence<Cliente> clientePersistence = new ClientePersistence();
+        List<Cliente> all = clientePersistence.findAll();
+        tela.carregaClientes(all);
     }
 
     @Override
     public void windowClosing(WindowEvent e) {
-        Persistence<Transacao> transacaoPersistence = new TransacaoPersistence();
-        transacaoPersistence.save(tela.listaTransacoes());
+        Persistence<Cliente> clientePersistence = new ClientePersistence();
+        clientePersistence.save(tela.listaClientes());
     }
 
     @Override

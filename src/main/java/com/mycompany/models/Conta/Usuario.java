@@ -34,6 +34,10 @@ public abstract class Usuario {
         return this.senha.equals(senhaDigitada) && this.cpf.equals(new Cpf(usuario));
     }
     
+    public boolean validaSenha(String senhaTentativa) {
+        return this.senha.equals(senhaTentativa);
+    }
+    
     //GETTERS
     public int getId() { 
         return id; 
@@ -53,10 +57,6 @@ public abstract class Usuario {
 
     public Email getEmail() {
         return email;
-    }
-
-    public String getSenha() {
-        return senha;
     }
     
     public boolean equals(Object obj) {

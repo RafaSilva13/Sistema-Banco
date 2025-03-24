@@ -30,8 +30,7 @@ public class GerenciaRendasVariaveisTelaClientes implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        Persistence<RendaVariavel> rendaVariavelPersistence = new RendaVariavelPersistence();
-        rendaVariavelPersistence.save(tela.listaRendasVariaveis());
+        
     }
 
     @Override

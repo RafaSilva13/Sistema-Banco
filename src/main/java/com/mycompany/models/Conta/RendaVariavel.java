@@ -1,5 +1,7 @@
 package com.mycompany.models.Conta;
 
+import java.util.Objects;
+
 /**
  *
  * @author Rafael Pereira da Silva Matricula: 202235013
@@ -11,7 +13,7 @@ public class RendaVariavel extends Investimento {
     private double rentabilidadeEsperada;
     
     public RendaVariavel(String descricao, double percentualRisco, double rentabilidadeEsperada) {
-        super(descricao);
+        super(descricao, "RendaVariavel");
         this.percentualRisco = percentualRisco;
         this.rentabilidadeEsperada = rentabilidadeEsperada;
     }
@@ -27,5 +29,10 @@ public class RendaVariavel extends Investimento {
     @Override
     public String toString() {
         return super.toString() + " (Renda Variável - Risco: " + percentualRisco + "%, Rentabilidade Esperada: " + rentabilidadeEsperada + "%)";
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(percentualRisco, rentabilidadeEsperada);
     }
 }

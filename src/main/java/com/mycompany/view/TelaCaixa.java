@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -80,18 +81,26 @@ public class TelaCaixa {
     private JPanel criarPainelSaque() {
         JPanel painel = new JPanel(new GridLayout(3, 2, 10, 10));
 
-        // Campos de entrada
-        painel.add(new JLabel("CPF do Cliente:"));
-        JTextField txtCpfCliente = new JTextField();
-        painel.add(txtCpfCliente);
+        // Campo CPF do Cliente
+        JPanel areaCpfCliente = new JPanel();
+        areaCpfCliente.setBorder(BorderFactory.createTitledBorder("CPF do Cliente"));
+        JTextField txtCpfCliente = new JTextField(15);
+        areaCpfCliente.add(txtCpfCliente);
+        painel.add(areaCpfCliente);
 
-        painel.add(new JLabel("Valor:"));
-        JTextField txtValor = new JTextField();
-        painel.add(txtValor);
+        // Campo Valor
+        JPanel areaValor = new JPanel();
+        areaValor.setBorder(BorderFactory.createTitledBorder("Valor"));
+        JTextField txtValor = new JTextField(15);
+        areaValor.add(txtValor);
+        painel.add(areaValor);
 
-        painel.add(new JLabel("Senha:"));
-        JPasswordField txtSenha = new JPasswordField();
-        painel.add(txtSenha);
+        // Campo Senha
+        JPanel areaSenha = new JPanel();
+        areaSenha.setBorder(BorderFactory.createTitledBorder("Senha"));
+        JPasswordField txtSenha = new JPasswordField(15);
+        areaSenha.add(txtSenha);
+        painel.add(areaSenha);
 
         // Botões
         JButton btnConfirmar = new JButton("Confirmar");
@@ -104,8 +113,7 @@ public class TelaCaixa {
                 double valor = Double.parseDouble(txtValor.getText());
                 String senha = new String(txtSenha.getPassword());
 
-                // Lógica para confirmar o saque
-                // Aqui você pode adicionar a lógica para encontrar o cliente pelo CPF e realizar o saque
+                // Lógica de saque
                 JOptionPane.showMessageDialog(null, "Saque realizado com sucesso!");
             }
         });
@@ -126,18 +134,26 @@ public class TelaCaixa {
     private JPanel criarPainelDeposito() {
         JPanel painel = new JPanel(new GridLayout(3, 2, 10, 10));
 
-        // Campos de entrada
-        painel.add(new JLabel("CPF do Cliente:"));
-        JTextField txtCpfCliente = new JTextField();
-        painel.add(txtCpfCliente);
+        // Campo CPF do Cliente
+        JPanel areaCpfCliente = new JPanel();
+        areaCpfCliente.setBorder(BorderFactory.createTitledBorder("CPF do Cliente"));
+        JTextField txtCpfCliente = new JTextField(15);
+        areaCpfCliente.add(txtCpfCliente);
+        painel.add(areaCpfCliente);
 
-        painel.add(new JLabel("Valor:"));
-        JTextField txtValor = new JTextField();
-        painel.add(txtValor);
+        // Campo Valor
+        JPanel areaValor = new JPanel();
+        areaValor.setBorder(BorderFactory.createTitledBorder("Valor"));
+        JTextField txtValor = new JTextField(15);
+        areaValor.add(txtValor);
+        painel.add(areaValor);
 
-        painel.add(new JLabel("Senha:"));
-        JPasswordField txtSenha = new JPasswordField();
-        painel.add(txtSenha);
+        // Campo Senha
+        JPanel areaSenha = new JPanel();
+        areaSenha.setBorder(BorderFactory.createTitledBorder("Senha"));
+        JPasswordField txtSenha = new JPasswordField(15);
+        areaSenha.add(txtSenha);
+        painel.add(areaSenha);
 
         // Botões
         JButton btnConfirmar = new JButton("Confirmar");
@@ -150,8 +166,7 @@ public class TelaCaixa {
                 double valor = Double.parseDouble(txtValor.getText());
                 String senha = new String(txtSenha.getPassword());
 
-                // Lógica para confirmar o depósito
-                // Aqui você pode adicionar a lógica para encontrar o cliente pelo CPF e realizar o depósito
+                // Lógica de depósito
                 JOptionPane.showMessageDialog(null, "Depósito realizado com sucesso!");
             }
         });
@@ -172,22 +187,33 @@ public class TelaCaixa {
     private JPanel criarPainelTransferencia() {
         JPanel painel = new JPanel(new GridLayout(4, 2, 10, 10));
 
-        // Campos de entrada
-        painel.add(new JLabel("CPF do Cliente Origem:"));
-        JTextField txtCpfClienteOrigem = new JTextField();
-        painel.add(txtCpfClienteOrigem);
+        // Campo CPF do Cliente Origem
+        JPanel areaCpfOrigem = new JPanel();
+        areaCpfOrigem.setBorder(BorderFactory.createTitledBorder("CPF do Cliente Origem"));
+        JTextField txtCpfOrigem = new JTextField(15);
+        areaCpfOrigem.add(txtCpfOrigem);
+        painel.add(areaCpfOrigem);
 
-        painel.add(new JLabel("CPF do Cliente Destino:"));
-        JTextField txtCpfClienteDestino = new JTextField();
-        painel.add(txtCpfClienteDestino);
+        // Campo CPF do Cliente Destino
+        JPanel areaCpfDestino = new JPanel();
+        areaCpfDestino.setBorder(BorderFactory.createTitledBorder("CPF do Cliente Destino"));
+        JTextField txtCpfDestino = new JTextField(15);
+        areaCpfDestino.add(txtCpfDestino);
+        painel.add(areaCpfDestino);
 
-        painel.add(new JLabel("Valor:"));
-        JTextField txtValor = new JTextField();
-        painel.add(txtValor);
+        // Campo Valor
+        JPanel areaValor = new JPanel();
+        areaValor.setBorder(BorderFactory.createTitledBorder("Valor"));
+        JTextField txtValor = new JTextField(15);
+        areaValor.add(txtValor);
+        painel.add(areaValor);
 
-        painel.add(new JLabel("Senha:"));
-        JPasswordField txtSenha = new JPasswordField();
-        painel.add(txtSenha);
+        // Campo Senha
+        JPanel areaSenha = new JPanel();
+        areaSenha.setBorder(BorderFactory.createTitledBorder("Senha"));
+        JPasswordField txtSenha = new JPasswordField(15);
+        areaSenha.add(txtSenha);
+        painel.add(areaSenha);
 
         // Botões
         JButton btnConfirmar = new JButton("Confirmar");
@@ -196,20 +222,19 @@ public class TelaCaixa {
         btnConfirmar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String cpfClienteOrigem = txtCpfClienteOrigem.getText();
-                String cpfClienteDestino = txtCpfClienteDestino.getText();
+                String cpfOrigem = txtCpfOrigem.getText();
+                String cpfDestino = txtCpfDestino.getText();
                 double valor = Double.parseDouble(txtValor.getText());
                 String senha = new String(txtSenha.getPassword());
 
-                // Lógica para confirmar a transferência
-                // Aqui você pode adicionar a lógica para encontrar os clientes pelos CPFs e realizar a transferência
+                // Lógica de transferência
                 JOptionPane.showMessageDialog(null, "Transferência realizada com sucesso!");
             }
         });
 
         btnCancelar.addActionListener(e -> {
-            txtCpfClienteOrigem.setText("");
-            txtCpfClienteDestino.setText("");
+            txtCpfOrigem.setText("");
+            txtCpfDestino.setText("");
             txtValor.setText("");
             txtSenha.setText("");
         });

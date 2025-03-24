@@ -3,39 +3,45 @@ package com.mycompany.models.ClassesAuxiliares;
 import com.mycompany.models.Conta.Cliente;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 // Classe interna para o diálogo de validação de senha
 public class DialogValidarSenha extends JDialog {
-    private JPasswordField txtSenha;
+    private JTextField txtSenha;
     private boolean senhaValida;
 
     public DialogValidarSenha(JFrame parent, Cliente usuarioLogado) {
         super(parent, "Validar Senha", true);
-        setSize(300, 150);
+        setSize(300, 180);
         setLocationRelativeTo(parent);
 
-        JPanel painel = new JPanel(new GridLayout(3, 1, 10, 10));
+        JPanel painel = new JPanel(new GridLayout(2, 1, 10, 10));
+        painel.setBorder(new EmptyBorder(10, 10, 0, 10));        
 
         // Campo de senha
-        painel.add(new JLabel("Digite sua senha:"));
-        txtSenha = new JPasswordField();
-        painel.add(txtSenha);
+        JPanel areaSenha = new JPanel();
+
+        areaSenha.setBorder(BorderFactory.createTitledBorder("Digite sua senha:"));
+        txtSenha = new JTextField(15);
+        areaSenha.add(txtSenha);
+
+        painel.add(areaSenha);
 
         // Botões
         JButton btnConfirmar = new JButton("Confirmar");
         JButton btnCancelar = new JButton("Cancelar");
 
-        btnConfirmar.addActionListener(e -> {
-            String senhaDigitada = new String(txtSenha.getPassword());
-            if (usuarioLogado.getSenha().equals(senhaDigitada)) {
+        btnConfirmar.addActionListener(e -> {      
+            String textoSenha = txtSenha.getText();
+            
+            if (usuarioLogado.validaSenha(textoSenha)) {
                 senhaValida = true;
                 dispose(); // Fecha o diálogo
             } else {

@@ -2,10 +2,10 @@ package com.mycompany.eventos;
 
 import com.mycompany.persistences.ClientePersistence;
 import com.mycompany.persistences.Persistence;
-import com.mycompany.models.Conta.Cliente;
 import com.mycompany.view.TelaCliente;
-import java.awt.event.WindowListener;
+import com.mycompany.models.Conta.Cliente;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.List;
 
 /**

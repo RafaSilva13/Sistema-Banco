@@ -1,9 +1,9 @@
 package com.mycompany.eventos;
 
-import com.mycompany.persistences.RendaFixaPersistence;
+import com.mycompany.persistences.RendaVariavelPersistence;
 import com.mycompany.persistences.Persistence;
-import com.mycompany.models.Conta.RendaFixa;
-import com.mycompany.view.TelaAdministrador;
+import com.mycompany.models.Conta.RendaVariavel;
+import com.mycompany.view.TelaGerente;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
 import java.util.List;
@@ -13,25 +13,25 @@ import java.util.List;
  * @author Rafael Pereira da Silva Matricula: 202235013
  */
 
-public class GerenciaRendasFixasAdministrador implements WindowListener {
+public class GerenciaRendasVariaveisGerente implements WindowListener {
 
-    private final TelaAdministrador tela;
+    private final TelaGerente tela;
 
-    public GerenciaRendasFixasAdministrador(TelaAdministrador tela) {
+    public GerenciaRendasVariaveisGerente(TelaGerente tela) {
         this.tela = tela;
     }
 
     @Override
     public void windowOpened(WindowEvent e) {
-        Persistence<RendaFixa> rendasFixasPersistence = new RendaFixaPersistence();
-        List<RendaFixa> all = rendasFixasPersistence.findAll();
-        tela.carregaRendasFixas(all);
+        Persistence<RendaVariavel> rendaVariavelPersistence = new RendaVariavelPersistence();
+        List<RendaVariavel> all = rendaVariavelPersistence.findAll();
+        tela.carregaRendasVariaveis(all);
     }
 
     @Override
     public void windowClosing(WindowEvent e) {
-        Persistence<RendaFixa> rendasFixasPersistence = new RendaFixaPersistence();
-        rendasFixasPersistence.save(tela.listaRendasFixas());
+        Persistence<RendaVariavel> rendaVariavelPersistence = new RendaVariavelPersistence();
+        rendaVariavelPersistence.save(tela.listaRendasVariaveis());
     }
 
     @Override

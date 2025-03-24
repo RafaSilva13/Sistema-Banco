@@ -1,1 +1,8 @@
-[]
+[
+  {
+    "taxaRendimento": 10.0,
+    "prazoMinimo": 6,
+    "prazoMaximo": 20,
+    "descricao": "Abab"
+  }
+]

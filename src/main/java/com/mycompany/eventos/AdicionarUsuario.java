@@ -1,6 +1,6 @@
 package com.mycompany.eventos;
 
-import com.mycompany.view.TelaAdministrador;
+import com.mycompany.view.TelaGerente;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,9 +10,9 @@ import java.awt.event.ActionListener;
  */
 
 public class AdicionarUsuario implements ActionListener {
-    private TelaAdministrador telaAdministrador;
+    private TelaGerente telaAdministrador;
 
-    public AdicionarUsuario(TelaAdministrador telaAdministrador) {
+    public AdicionarUsuario(TelaGerente telaAdministrador) {
         this.telaAdministrador = telaAdministrador;
     }
 

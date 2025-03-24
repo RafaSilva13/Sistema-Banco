@@ -35,8 +35,8 @@ public class BotaoCriarInvestimentoRendaVariavelTelaCliente implements ActionLis
     public void actionPerformed(ActionEvent e) {
         try {
             double valor = Double.parseDouble(valorTexto);
-
-            if (selectedIndex != -1) {
+            
+            if (selectedIndex != -1 && !telaCliente.listaRendasVariaveis().isEmpty() && selectedIndex >= 0 && selectedIndex < telaCliente.listaRendasVariaveis().size()) {
                 RendaVariavel rendaVariavel = telaCliente.listaRendasVariaveis().get(selectedIndex);
 
                 // Exibe o diálogo de validação de senha
@@ -44,7 +44,7 @@ public class BotaoCriarInvestimentoRendaVariavelTelaCliente implements ActionLis
                 dialog.setVisible(true);
 
                 if (dialog.isSenhaValida()) {
-                    if (usuarioLogado.investirRendaVariavel(rendaVariavel, valor)) {
+                    if (telaCliente.atualizaUsuarioLogadoInvestimentoRendaVariavel(rendaVariavel, valor)) {
                         JOptionPane.showMessageDialog(null, "Investimento em renda variável realizado com sucesso!");
                     } else {
                         JOptionPane.showMessageDialog(null, "Saldo insuficiente para investir.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -57,6 +57,8 @@ public class BotaoCriarInvestimentoRendaVariavelTelaCliente implements ActionLis
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Valor inválido. Insira um número válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            telaCliente.atualizarInterface(); // Atualiza a interface após a operação
         }
     }
 }

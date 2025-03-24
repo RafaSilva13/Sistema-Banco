@@ -1,6 +1,6 @@
 package com.mycompany.eventos;
 
-import com.mycompany.view.TelaAdministrador;
+import com.mycompany.view.TelaGerente;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,9 +11,9 @@ import java.awt.event.ActionListener;
 
 public class OpcaoDadosGeraisAdministrador implements ActionListener {
 
-    private final TelaAdministrador telaAdministrador;
+    private final TelaGerente telaAdministrador;
 
-    public OpcaoDadosGeraisAdministrador(TelaAdministrador telaAdministrador) {
+    public OpcaoDadosGeraisAdministrador(TelaGerente telaAdministrador) {
         this.telaAdministrador = telaAdministrador;
     }
 

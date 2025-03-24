@@ -1,1 +1,7 @@
-[]
+[
+  {
+    "percentualRisco": 60.0,
+    "rentabilidadeEsperada": 24.0,
+    "descricao": "Beep"
+  }
+]

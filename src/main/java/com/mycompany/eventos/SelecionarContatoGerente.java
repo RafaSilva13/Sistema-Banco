@@ -1,6 +1,6 @@
 package com.mycompany.eventos;
 
-import com.mycompany.view.TelaAdministrador;
+import com.mycompany.view.TelaGerente;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -11,9 +11,9 @@ import javax.swing.event.ListSelectionListener;
 
 public class SelecionarContatoGerente implements ListSelectionListener {
 
-    private final TelaAdministrador tela;
+    private final TelaGerente tela;
 
-    public SelecionarContatoGerente(TelaAdministrador tela) {
+    public SelecionarContatoGerente(TelaGerente tela) {
         this.tela = tela;
     }
 

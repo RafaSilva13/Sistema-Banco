@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import com.mycompany.models.ClassesAuxiliares.*;
+import com.mycompany.persistences.*;
 import java.util.Random;
 
 /**
@@ -79,6 +80,23 @@ public class Cliente extends Usuario {
         this.extrato.add(transacao);
     }
     
+    // Métodos na classe Cliente para edição de dados
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setNumeroDeTelefone(Telefone numeroDeTelefone) {
+        this.numeroDeTelefone = numeroDeTelefone;
+    }
+
+    public void setEmail(Email email) {
+        this.email = email;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+    
     // GETTERS
     
     public List<Transacao> getExtrato() {
@@ -138,38 +156,38 @@ public class Cliente extends Usuario {
     
     // Método para investir em renda fixa
     public boolean investirRendaFixa(RendaFixa rendaFixa, double valor) {
-        
         if (saldo >= valor) {
             saldo -= valor;
             extrato.add(new Transacao("Investimento em Renda Fixa", valor, "Investimento: " + rendaFixa.getDescricao()));
-            investimentos.add(rendaFixa);
-            
+            investimentos.add(rendaFixa); // Adiciona o investimento à lista
+
             return true;
         }
-        
+
         return false;
     }
 
     // Método para investir em renda variável
     public boolean investirRendaVariavel(RendaVariavel rendaVariavel, double valor) {
-        
         if (saldo >= valor) {
             saldo -= valor;
             extrato.add(new Transacao("Investimento em Renda Variável", valor, "Investimento: " + rendaVariavel.getDescricao()));
-            investimentos.add(rendaVariavel);
-            
+            investimentos.add(rendaVariavel); // Adiciona o investimento à lista
+
             return true;
         }
-        
+
         return false;
     }
     
-    public void listarInvestimentos() {
-        
-        System.out.println("Investimentos de " + nome + ":");
-        
+    // Método para carregar investimentos
+    public void carregarInvestimentos(List<Investimento> investimentos) {
         for (Investimento investimento : investimentos) {
-            System.out.println(investimento);
+            if (investimento.getTipo().equals("RendaFixa")) {
+                this.investimentos.add((RendaFixa) investimento);
+            } else if (investimento.getTipo().equals("RendaVariavel")) {
+                this.investimentos.add((RendaVariavel) investimento);
+            }
         }
     }
 }

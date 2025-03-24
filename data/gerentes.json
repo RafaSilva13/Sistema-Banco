@@ -2,19 +2,19 @@
   {
     "rendasFixas": [],
     "rendasVariaveis": [],
-    "id": 1,
-    "senha": "1234",
-    "nome": "Gabriele",
+    "id": 0,
+    "senha": "123",
+    "nome": "Pedro",
     "cpf": {
-      "cpf": "06034722063"
+      "cpf": "16107061614"
     },
     "numeroDeTelefone": {
       "ddd": 32,
-      "numero": "976466456"
+      "numero": "988887777"
     },
     "email": {
-      "email": "gabriele@gmail.com",
-      "login": "gabriele",
+      "email": "pedro@gmail.com",
+      "login": "pedro",
       "dominio": "gmail.com"
     }
   }

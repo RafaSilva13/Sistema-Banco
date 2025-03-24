@@ -12,7 +12,7 @@ public class RendaFixa extends Investimento {
     private int prazoMaximo;
     
     public RendaFixa(String descricao, double taxaRendimento, int prazoMinimo, int prazoMaximo) {
-        super(descricao);
+        super(descricao, "RendaFixa");
         this.taxaRendimento = taxaRendimento;
         this.prazoMinimo = prazoMinimo;
         this.prazoMaximo = prazoMaximo;

@@ -7,8 +7,7 @@ import java.io.*;
  * @author Rafael Pereira da Silva Matricula: 202235013
  */
 
-// Arquivo Transacao
-public class ArquivoTransacao {
+public class Arquivo {
 
     public static String le(String filePath) {
         StringBuilder content = new StringBuilder();
@@ -19,7 +18,6 @@ public class ArquivoTransacao {
                 content.append(line).append("\n");
             }
         } catch (IOException e) {
-            System.out.println("Arquivo nao encontrado");
             //e.printStackTrace();
         }
 

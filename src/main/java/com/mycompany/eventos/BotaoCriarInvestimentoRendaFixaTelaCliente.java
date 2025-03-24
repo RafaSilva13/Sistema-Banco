@@ -35,7 +35,7 @@ public class BotaoCriarInvestimentoRendaFixaTelaCliente implements ActionListene
         try {
             double valor = Double.parseDouble(txtValor);
             
-            if (selectedIndex != -1) {
+            if (selectedIndex != -1 && !telaCliente.listaRendasVariaveis().isEmpty() && selectedIndex >= 0 && selectedIndex < telaCliente.listaRendasVariaveis().size()) {
                 RendaFixa rendaFixa = telaCliente.listaRendasFixas().get(selectedIndex);
 
                 // Exibe o diálogo de validação de senha
@@ -43,7 +43,7 @@ public class BotaoCriarInvestimentoRendaFixaTelaCliente implements ActionListene
                 dialog.setVisible(true);
 
                 if (dialog.isSenhaValida()) {
-                    if (usuarioLogado.investirRendaFixa(rendaFixa, valor)) {
+                    if (telaCliente.atualizaUsuarioLogadoInvestimentoRendaFixa(rendaFixa, valor)) {
                         JOptionPane.showMessageDialog(null, "Investimento em renda fixa realizado com sucesso!");
                     } else {
                         JOptionPane.showMessageDialog(null, "Saldo insuficiente para investir.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -56,6 +56,8 @@ public class BotaoCriarInvestimentoRendaFixaTelaCliente implements ActionListene
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Valor inválido. Insira um número válido.", "Erro", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            telaCliente.atualizarInterface(); // Atualiza a interface após a operação
         }
     }
 }

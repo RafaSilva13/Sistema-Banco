@@ -16,38 +16,37 @@ import java.time.LocalDateTime;
  * @author Rafael Pereira da Silva Matricula: 202235013
  */
 
-// Gerente Persistence
 public class GerentePersistence implements Persistence<Gerente> {
-    
+
     private static final String PATH = DIRECTORY + File.separator + "gerentes.json";
-    private static final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).setPrettyPrinting().create();
-    
+
     @Override
     public void save(List<Gerente> itens) {
-        
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).setPrettyPrinting().create();
         String json = gson.toJson(itens);
+
         File diretorio = new File(DIRECTORY);
-        
         if (!diretorio.exists())
             diretorio.mkdirs();
-        
-        ArquivoGerente.salva(PATH, json);
+
+        Arquivo.salva(PATH, json);
     }
-    
+
     @Override
     public List<Gerente> findAll() {
-        String json = ArquivoGerente.le(PATH);
-        
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()).setPrettyPrinting().create();
+
+        String json = Arquivo.le(PATH);
+
         List<Gerente> gerentes = new ArrayList<>();
-        
         if (!json.trim().isEmpty()) {
             Type tipoLista = new TypeToken<List<Gerente>>() {}.getType();
             gerentes = gson.fromJson(json, tipoLista);
-            
+
             if (gerentes == null)
                 gerentes = new ArrayList<>();
         }
-        
+
         return gerentes;
     }
 }

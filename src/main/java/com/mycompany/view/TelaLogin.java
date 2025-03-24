@@ -97,7 +97,6 @@ public class TelaLogin extends JFrame {
         
         // Inicia a barra superior de seleção de tipo de login com as opções
         barraLogin = new JTabbedPane();
-        barraLogin.addTab("Administrador", criarPainelEntradaAdministrador());
         barraLogin.addTab("Cliente", criarPainelEntradaCliente());
         barraLogin.addTab("Gerente", criarPainelEntradaGerente());
         barraLogin.addTab("Caixa", criarPainelEntradaCaixa());
@@ -167,30 +166,6 @@ public class TelaLogin extends JFrame {
     
     public JList getJListCaixas() {
         return jlCaixas;
-    }
- 
-    // Métodos para criar painéis de login e cadastro
-    private JPanel criarPainelEntradaAdministrador() {
-        JPanel painelAdministrador = new JPanel();
-        painelAdministrador.setSize(350, 300);
-
-        JPanel painelLogin = criaPainelAdministradorLogin();
-        painelLogin.setLayout(new BoxLayout(painelLogin, BoxLayout.Y_AXIS));
-        painelLogin.setBorder(BorderFactory.createRaisedBevelBorder());
-        
-        JPanel painelBotaoLogin = new JPanel();
-        painelBotaoLogin.setBorder(new EmptyBorder(10, 0, 0, 0));
-        
-        JButton botaoLogin = new JButton("Entrar");
-        botaoLogin.addActionListener(new BotaoLoginAdministrador(tela, new TelaAdministrador(), this));
-        
-        painelBotaoLogin.add(botaoLogin);
-        painelLogin.add(painelBotaoLogin);
-        
-        painelAdministrador.add(painelLogin);
-        painelAdministrador.setBorder(new EmptyBorder(25, 0, 25, 0));
-
-        return painelAdministrador;
     }
     
     private JPanel criarPainelEntradaCliente() {
@@ -300,12 +275,12 @@ public class TelaLogin extends JFrame {
         areaNomeCliente.setBorder(BorderFactory.createTitledBorder("Nome"));
         tfNomeCliente = new JTextField(12);
         areaNomeCliente.add(tfNomeCliente);
-        
+
         JPanel areaCpfCliente = new JPanel();
         areaCpfCliente.setBorder(BorderFactory.createTitledBorder("CPF"));
         tfCpfCliente = new JTextField(12);
         areaCpfCliente.add(tfCpfCliente);
-        
+
         panelEsquerdo.add(areaNomeCliente);
         panelEsquerdo.add(areaCpfCliente);
 
@@ -316,21 +291,22 @@ public class TelaLogin extends JFrame {
         areaTelefoneCliente.setBorder(BorderFactory.createTitledBorder("Telefone"));
         tfTelefoneCliente = new JTextField(12);
         areaTelefoneCliente.add(tfTelefoneCliente);
-        
+
         JPanel areaEmailCliente = new JPanel();
         areaEmailCliente.setBorder(BorderFactory.createTitledBorder("Email"));
         tfEmailCliente = new JTextField(12);
         areaEmailCliente.add(tfEmailCliente);
-        
+
         panelCentral.add(areaTelefoneCliente);
         panelCentral.add(areaEmailCliente);
 
         JPanel panelDireito = new JPanel();
         panelDireito.setLayout(new BoxLayout(panelDireito, BoxLayout.Y_AXIS));
 
+        // Adicionando o campo de senha
         JPanel areaSenhaCliente = new JPanel();
         areaSenhaCliente.setBorder(BorderFactory.createTitledBorder("Senha"));
-        tfSenhaCadastroCliente = new JTextField(12);
+        tfSenhaCadastroCliente = new JPasswordField(12); // Usando JPasswordField para senha
         areaSenhaCliente.add(tfSenhaCadastroCliente);
 
         JPanel painelBotaoCadastro = new JPanel();
@@ -339,12 +315,14 @@ public class TelaLogin extends JFrame {
         botaoCadastro.addActionListener(new AdicionarCliente(this));
         painelBotaoCadastro.add(botaoCadastro);
 
+        panelDireito.add(areaSenhaCliente);
+
         areaCadastro.add(areaTextoCadastro, BorderLayout.NORTH);
         areaCadastro.add(panelEsquerdo, BorderLayout.WEST);
         areaCadastro.add(panelCentral, BorderLayout.CENTER);
         areaCadastro.add(panelDireito, BorderLayout.EAST);
         areaCadastro.add(painelBotaoCadastro, BorderLayout.SOUTH);
-        
+
         return areaCadastro;
     }
     
@@ -395,9 +373,10 @@ public class TelaLogin extends JFrame {
         JPanel panelDireito = new JPanel();
         panelDireito.setLayout(new BoxLayout(panelDireito, BoxLayout.Y_AXIS));
 
+        // Adicionando o campo de senha
         JPanel areaSenhaGerente = new JPanel();
         areaSenhaGerente.setBorder(BorderFactory.createTitledBorder("Senha"));
-        tfSenhaCadastroGerente = new JTextField(12);
+        tfSenhaCadastroGerente = new JPasswordField(12); // Usando JPasswordField para senha
         areaSenhaGerente.add(tfSenhaCadastroGerente);
 
         JPanel painelBotaoCadastro = new JPanel();
@@ -405,6 +384,8 @@ public class TelaLogin extends JFrame {
         JButton botaoCadastro = new JButton("Cadastrar");
         botaoCadastro.addActionListener(new AdicionarGerente(this));
         painelBotaoCadastro.add(botaoCadastro);
+
+        panelDireito.add(areaSenhaGerente);
 
         areaCadastro.add(areaTextoCadastro, BorderLayout.NORTH);
         areaCadastro.add(panelEsquerdo, BorderLayout.WEST);
@@ -462,9 +443,10 @@ public class TelaLogin extends JFrame {
         JPanel panelDireito = new JPanel();
         panelDireito.setLayout(new BoxLayout(panelDireito, BoxLayout.Y_AXIS));
 
+        // Adicionando o campo de senha
         JPanel areaSenhaCaixa = new JPanel();
         areaSenhaCaixa.setBorder(BorderFactory.createTitledBorder("Senha"));
-        tfSenhaCadastroCaixa = new JTextField(12);
+        tfSenhaCadastroCaixa = new JPasswordField(12); // Usando JPasswordField para senha
         areaSenhaCaixa.add(tfSenhaCadastroCaixa);
 
         JPanel painelBotaoCadastro = new JPanel();
@@ -472,6 +454,8 @@ public class TelaLogin extends JFrame {
         JButton botaoCadastro = new JButton("Cadastrar");
         botaoCadastro.addActionListener(new AdicionarCaixa(this));
         painelBotaoCadastro.add(botaoCadastro);
+
+        panelDireito.add(areaSenhaCaixa);
 
         areaCadastro.add(areaTextoCadastro, BorderLayout.NORTH);
         areaCadastro.add(panelEsquerdo, BorderLayout.WEST);

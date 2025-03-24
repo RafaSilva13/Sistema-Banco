@@ -30,8 +30,7 @@ public class GerenciaRendasFixasTelaClientes implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        Persistence<RendaFixa> rendasFixasPersistence = new RendaFixaPersistence();
-        rendasFixasPersistence.save(tela.listaRendasFixas());
+        
     }
 
     @Override

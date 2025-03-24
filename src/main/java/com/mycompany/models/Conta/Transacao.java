@@ -1,6 +1,7 @@
 package com.mycompany.models.Conta;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -25,8 +26,9 @@ public class Transacao {
         return "[" + dataHora + "] " + tipo + ": R$ " + valor + " - " + descricao;
     }
 
-    public LocalDateTime getDataHora() {
-        return dataHora;
+    public String getDataHora() {
+        // Formata a data e hora
+        return dataHora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 
     public String getTipo() {
